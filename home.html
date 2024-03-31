@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Student Profile</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      h1 {
+        margin-bottom: 30px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"], input[type="email"], input[type="number"], textarea {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        height: 150px;
+      }
+
+      .image-preview {
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      .image-preview img {
+        max-width: 300px;
+        max-height: 300px;
+      }
+
+      input[type="file"] {
+        margin-bottom: 20px;
+      }
+
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Student Profile</h1>
+    <form method="POST" action="/profile" enctype="multipart/form-data">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required style="width: 50%;">
+  
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required style="width: 50%;">
+  
+      <label for="phone">Phone:</label>
+      <input type="number" id="phone" name="phone" required style="width: 50%;">
+  
+      <label for="school">School:</label>
+      <input type="text" id="school" name="school" required style="width: 50%;">
+  
+      <label for="major">Major:</label>
+      <input type="text" id="major" name="major" required style="width: 50%;">
+  
+      <label for="picture">Profile Picture:</label>
+      <input type="file" id="picture" name="picture" accept="image/*">
+      <div class="image-preview">
+        <img id="preview" src="#" alt="Image Preview">
+      </div>
+  
+      <label for="programming-skills">Programming Skills:</label>
+      <div id="programming-skills">
+        <div class="skill-input">
+          <input type="text" name="skills[]" required>
+          <button class="remove-skill" type="button">Remove</button>
+        </div>
+        <button class="add-skill" type="button">Add Another Skill</button>
+      </div>
+  
+      <button type="submit">Save Profile</button>
+    </form>
+  
+    <script>
+      // Add/remove programming skill input fields
+      const addSkillButton = document.querySelector('.add-skill');
+      const skillsContainer = document.querySelector('#programming-skills');
+  
+      function createSkillInput() {
+        const inputWrapper = document.createElement('div');
+        inputWrapper.classList.add('skill-input');
+  
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'skills[]';
+        input.required = true;
+  
+        const removeButton = document.createElement('button');
+        removeButton.classList.add('remove-skill');
+        removeButton.type = 'button';
+        removeButton.textContent = 'Remove';
+        removeButton.addEventListener('click', () => {
+          inputWrapper.remove();
+        });
+  
+        inputWrapper.appendChild(input);
+        inputWrapper.appendChild(removeButton);
+        return inputWrapper;
+      }
+  
+      addSkillButton.addEventListener('click', () => {
+        const inputWrapper = createSkillInput();
+        skillsContainer.insertBefore(inputWrapper, addSkillButton);
+      });
+  
+      document.addEventListener('click', (event) => {
+        if (event.target.matches('.remove-skill')) {
+          event.target.closest('.skill-input').remove();
+        }
+      });
+    </script>
+    </form>
+  </body>
+</html>
